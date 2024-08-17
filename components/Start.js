@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { StyleSheet, View, Text, Button, TextInput, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text, Button, TextInput, TouchableOpacity, ImageBackground } from 'react-native';
 
 const StartScreen = ({ navigation }) => {
   //state to set name
@@ -7,10 +7,12 @@ const StartScreen = ({ navigation }) => {
   //state to set background color
   const [background, setBackground] = useState('');
 
+  const backgroundImage = require('../img/BackgroundImage.png');
 
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container} >
+      <ImageBackground source={backgroundImage} resizeMode="cover" style={styles.image}>
       <Text>Hello {name}</Text>
       <TextInput
         style={styles.textInput}
@@ -48,6 +50,7 @@ const StartScreen = ({ navigation }) => {
         title="Go to ChatScreen"
         onPress={() => navigation.navigate('ChatScreen', { name: name, background: background})}
       />
+      </ImageBackground>
     </View>
   );
 }
@@ -79,7 +82,11 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     padding: 20,
-  }
+  },
+  image: {
+    flex: 1,
+    justifyContent: 'center',
+  },
 });
 
 export default StartScreen;
