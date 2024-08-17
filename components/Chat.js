@@ -2,14 +2,15 @@ import { useEffect } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 
 const ChatScreen = ({ route, navigation }) => {
-  const { name } = route.params;
+  const { name , background } = route.params;
 
   useEffect(() => {
-    navigation.setOptions({ title: name });
+    navigation.setOptions({ title: name, color: background });
   }, []);
 
  return (
-   <View style={styles.container}>
+   <View style={[styles.container,
+   {backgroundColor: background}]}>
      <Text>Hello {name}!</Text>
    </View>
  );
