@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { StyleSheet, View, Text, Button, TextInput, TouchableOpacity, ImageBackground } from 'react-native';
 
-const StartScreen = ({ navigation }) => {
+const Start = ({ navigation }) => {
   //state to set name
   const [name, setName] = useState('');
   //state to set background color
@@ -47,8 +47,8 @@ const StartScreen = ({ navigation }) => {
       </TouchableOpacity>
     </View>
       <Button
-        title="Go to ChatScreen"
-        onPress={() => navigation.navigate('ChatScreen', { name: name, background: background})}
+        title="Go to Chat"
+        onPress={() => navigation.navigate('Chat', { name: name, background: background})}
       />
       </ImageBackground>
     </View>
@@ -89,4 +89,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default StartScreen;
+export default Start;

@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
-import StartScreen from './components/Start';
-import ChatScreen from './components/Chat';
+import Start from './components/Start';
+import Chat from './components/Chat';
 
 const Stack = createNativeStackNavigator();
 
@@ -12,13 +12,13 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="StartScreen">
+        initialRouteName="Start">
         <Stack.Screen
-          name="StartScreen"
-          component={StartScreen}/>
+          name="Start"
+          component={Start}/>
         <Stack.Screen
-          name="ChatScreen"
-          component={ChatScreen}/>
+          name="Chat"
+          component={Chat}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
