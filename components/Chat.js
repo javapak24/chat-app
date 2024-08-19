@@ -10,6 +10,8 @@ const Chat = () => {
 const ChatScreen = ({ route, navigation }) => {
   const { name , background } = route.params;
   const [messages, setMessages] = useState([]);
+
+  //sets name as name typed by user on mainscreen and sets background as user selected background
   useEffect(() => {
     navigation.setOptions({ title: name, color: background });
   }, []);
