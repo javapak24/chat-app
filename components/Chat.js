@@ -2,7 +2,7 @@ import { collection, addDoc, onSnapshot, query, where, orderBy } from "firebase/
 import { useEffect, useState } from 'react';
 import { StyleSheet, View, Text, KeyboardAvoidingView, Platform} from 'react-native';
 
-import { Bubble, GiftedChat } from "react-native-gifted-chat";
+import { Bubble, GiftedChat, InputToolbar } from "react-native-gifted-chat";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -16,11 +16,21 @@ const Chat = ({ route, navigation, db, isConnected }) => {
     navigation.setOptions({ title: name, color: background });
   }, []);
   
+
   
-  
+  let unsubMessages;
+
   useEffect(() => {
+
+    if (isConnected === true) {
+
+      // unregister current onSnapshot() listener to avoid registering multiple listeners when
+      // useEffect code is re-executed.
+      if (unsubMessages) unsubMessages();
+      unsubMessages = null;
+
     const q = query(collection(db, "messages"), orderBy("createdAt", "desc"));
-    const unsubMessages = onSnapshot(q, (docs) => {
+    unsubMessages = onSnapshot(q, (docs) => {
       let newMessages = [];
       docs.forEach(doc => {
         newMessages.push({
@@ -31,11 +41,14 @@ const Chat = ({ route, navigation, db, isConnected }) => {
       })
       cacheMessages(newMessages);
       setMessages(newMessages);
-    })
+    });
+  } else loadCachedMessages();
+
+
     return () => {
       if (unsubMessages) unsubMessages();
     }
-   }, []);
+   }, [isConnected]);
 
 
 
@@ -70,12 +83,18 @@ const Chat = ({ route, navigation, db, isConnected }) => {
     />
   }
 
+  const renderInputToolbar = (props) => {
+    if (isConnected) return <InputToolbar {...props} />;
+    else return null;
+   }
+
 
   return (
     <View style={[styles.mcontainer, {backgroundColor: background}]}>
     <GiftedChat
       messages={messages}
       renderBubble={renderBubble}
+      renderInputToolbar={renderInputToolbar}
       onSend={messages => onSend(messages)}
       user={{
         _id: userID,

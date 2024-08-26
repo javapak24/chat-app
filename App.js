@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { Alert, StyleSheet, Text, View } from 'react-native';
 import Start from './components/Start';
 import Chat from './components/Chat';
 
@@ -12,6 +12,7 @@ import { initializeApp } from "firebase/app";
 import { getFirestore, disableNetwork, enableNetwork } from "firebase/firestore";
 
 import { useNetInfo }from '@react-native-community/netinfo';
+import { useEffect } from 'react';
 
 export default function App() {
 
