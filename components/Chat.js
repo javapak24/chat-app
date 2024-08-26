@@ -4,9 +4,10 @@ import { StyleSheet, View, Text, KeyboardAvoidingView, Platform} from 'react-nat
 
 import { Bubble, GiftedChat } from "react-native-gifted-chat";
 
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
-const Chat = ({ route, navigation, db }) => {
+const Chat = ({ route, navigation, db, isConnected }) => {
   const { name , background, userID } = route.params;
   const [messages, setMessages] = useState([]);
 
