@@ -17,6 +17,7 @@ const Chat = ({ route, navigation, db, isConnected }) => {
   }, []);
   
   
+  
   useEffect(() => {
     const q = query(collection(db, "messages"), orderBy("createdAt", "desc"));
     const unsubMessages = onSnapshot(q, (docs) => {
@@ -28,12 +29,28 @@ const Chat = ({ route, navigation, db, isConnected }) => {
           createdAt: new Date(doc.data().createdAt.toMillis())
         })
       })
+      cacheMessages(newMessages);
       setMessages(newMessages);
     })
     return () => {
       if (unsubMessages) unsubMessages();
     }
    }, []);
+
+
+
+   const cacheMessages = async (messagesToCache) => {
+    try {
+      await AsyncStorage.setItem('messages', JSON.stringify(messagesToCache));
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+
+  const loadCachedMessages = async () => {
+    const cachedMessages = await AsyncStorage.getItem("messages") || [];
+    setMessages(JSON.parse(cachedMessages));
+  }
 
   const onSend = (newMessages) => {
     addDoc(collection(db, "messages"), newMessages[0])
